@@ -165,15 +165,32 @@ footer{background:var(--ink-2);border-top:1px solid var(--divider);padding:1.75r
   <p class="contact-label">Get in Touch</p>
   <h2 class="contact-title">Let's <em>Connect</em></h2>
   <p class="contact-body">Have a question, a sourcing lead, or just want to say hello? We're a small operation and we read every message.</p>
-  <form class="cf" onsubmit="send(event)">
+  <div data-fs-success style="display:none;color:var(--gold);font-size:.82rem;letter-spacing:.05em;padding-top:.25rem">Thanks — we'll get back to you soon.</div>
+  <div data-fs-error style="display:none;color:#ff6b6b;font-size:.82rem;letter-spacing:.05em;padding-bottom:.75rem"></div>
+  <form id="contact-form" class="cf">
     <div class="f-row">
-      <div class="f"><label>First Name</label><input type="text" placeholder="John"></div>
-      <div class="f"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+      <div class="f">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="John" data-fs-field />
+        <span data-fs-error="firstName" style="display:none;color:#ff6b6b;font-size:.7rem;margin-top:.15rem"></span>
+      </div>
+      <div class="f">
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="Smith" data-fs-field />
+        <span data-fs-error="lastName" style="display:none;color:#ff6b6b;font-size:.7rem;margin-top:.15rem"></span>
+      </div>
     </div>
-    <div class="f"><label>Email</label><input type="email" placeholder="john@example.com"></div>
-    <div class="f"><label>Message</label><textarea placeholder="What's on your mind?"></textarea></div>
-    <button type="submit" class="f-submit">Send Message</button>
-    <p id="success">Thanks — we'll get back to you soon.</p>
+    <div class="f">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="john@example.com" data-fs-field required />
+      <span data-fs-error="email" style="display:none;color:#ff6b6b;font-size:.7rem;margin-top:.15rem"></span>
+    </div>
+    <div class="f">
+      <label>Message</label>
+      <textarea name="message" placeholder="What's on your mind?" data-fs-field required></textarea>
+      <span data-fs-error="message" style="display:none;color:#ff6b6b;font-size:.7rem;margin-top:.15rem"></span>
+    </div>
+    <button type="submit" class="f-submit" data-fs-submit-btn>Send Message</button>
   </form>
 </section>
 
@@ -187,12 +204,9 @@ footer{background:var(--ink-2);border-top:1px solid var(--divider);padding:1.75r
 </footer>
 
 <script>
-function send(e){
-  e.preventDefault();
-  var btn=e.target.querySelector('.f-submit');
-  btn.textContent='Sending…';btn.disabled=true;
-  setTimeout(function(){e.target.reset();btn.style.display='none';document.getElementById('success').style.display='block';},800);
-}
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#contact-form', formId: 'xkoekzwb' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
